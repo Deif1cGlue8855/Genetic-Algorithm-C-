@@ -194,7 +194,7 @@ Currently, the only graphs it can produce are bar graphs that show the fitness o
 ### Theme 4
 ![Alt image](Themes/Theme3.png)
                                                                                                                                                                                  
-## <u>Saving</u>
+## <ins>Saving</ins>
 
 The GA is able to save the progress it has done. It does this by saving the current generationa and saving it to a text file.
 

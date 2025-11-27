@@ -165,7 +165,8 @@ int main(){
     return 0;
 }
 ```
-This is the fitness function in my example for a word guesser
+*this example is missing the fitness function*
+
 ## <u>Graphs</u>
 
 This library has inbuilt graphing functions and different themes for them too. 
@@ -182,17 +183,25 @@ Currently, the only graphs it can produce are bar graphs that show the fitness o
 |_.printBuffer()| This will print everything and clear the buffer|- |-
 
 ### Theme 1
+![Alt image](Themes/Theme0.png)
 
 ### Theme 2
+![Alt image](Themes/Theme1.png)
 
 ### Theme 3
+![Alt image](Themes/Theme2.png)
 
 ### Theme 4
+![Alt image](Themes/Theme3.png)
                                                                                                                                                                                  
 ## <u>Saving</u>
 
-The GA is able to save the progress it has done. It does this by saving the current generationa and saving it to a text file
+The GA is able to save the progress it has done. It does this by saving the current generationa and saving it to a text file.
 
+|Function|Descrioption|Parameters|Paramater data types|
+|--------|------------|----------|--------------------|
+|_.saveGen()|Will save the current generation into the inputted file name. Will create the file if it doesn't exist|- |-
+|_.loadGen()|Will load from the save file and put directly into the GAs first generation (replaces _.makeFirstGen()|- |-
 ## <u>GA optimisation</u>
 
 ## <u>Extra</u>

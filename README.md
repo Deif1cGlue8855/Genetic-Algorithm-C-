@@ -191,6 +191,8 @@ Currently, the only graphs it can produce are bar graphs that show the fitness o
                                                                                                                                                                                  
 ## <u>Saving</u>
 
+The GA is able to save the progress it has done. It does this by saving the current generationa and saving it to a text file
+
 ## <u>GA optimisation</u>
 
 ## <u>Extra</u>

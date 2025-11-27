@@ -49,7 +49,7 @@ int main(){
     initRNG();
     std::vector<std::string> charBounds = createBounds();
     //Instantiating the GA class
-    GA ga(100,target.size(),0.03,fileName, charBounds, 2);
+    GA ga(100,target.size(),0.03,fileName, charBounds, 1);
     ga.makeFirstGen();
     //ga.loadGen();
     int i = 0;

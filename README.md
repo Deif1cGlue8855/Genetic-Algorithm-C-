@@ -1,6 +1,6 @@
-# <u>GA documentation</u>
+# <ins>GA documentation</ins>
 
-# <u>Table of contents</u>
+# <ins>Table of contents</ins>
 - [Description](#description)
 - [Set up](#set-up)
 - [Instantiation](#instantiation)
@@ -11,7 +11,7 @@
 - [Optimisation](#ga-optimisation)
 - [Extra](#extra)
 
-## <u>Description</u>
+## <ins>Description</ins>
 
 |Key words| Meaning|
 |---------|--------|
@@ -45,7 +45,7 @@ It will then feed this new generation back into the GA and repeat the whole proc
 This project is my attempt at creating this algorithm / AI.
 
 It works of two main classes being used. Those being the GA class and DNA class.
-## <u>Set up </u>
+## <ins>Set up </ins>
 
 Download the two .hpp files needed (GA.hpp, DNA.hpp)
 
@@ -76,7 +76,7 @@ The GA.hpp file already references DNA.hpp
 
 No extra lines of compilation are required
 
-## <u>Instantiation</u>
+## <ins>Instantiation</ins>
 
 In order to create the GA object you need to write:
 
@@ -92,7 +92,7 @@ GA gaName(100, 5, 0.03, "SaveLocation.txt", characterSet, 1);
 |Character set| characterSet| A list of all the characters the GA may use as it's learning| std::vector\<std::string\>|
 |Graph theme|1| Select the characters that will be used to represent the graphs|int|
 
-## <u>How to process data</u>
+## <ins>How to process data</ins>
 
 ### GA class
 | Function | Description|Parameters| Parameter data types|
@@ -132,7 +132,7 @@ The main part that is now missing is the fitness function
 |----------|-------------|------------|---------------------|------------------|
 |_.getValueAt()| Will return the value at the inputted location| index | int | std::string|
 
-## <u>Fitness function</u>
+## <ins>Fitness function</ins>
 
 The fitness function is unique for each task and will have to be written based on what you are trying to solve.
 
@@ -167,7 +167,7 @@ int main(){
 ```
 *this example is missing the fitness function*
 
-## <u>Graphs</u>
+## <ins>Graphs</ins>
 
 This library has inbuilt graphing functions and different themes for them too. 
 
@@ -204,6 +204,6 @@ The GA is able to save the progress it has done. It does this by saving the curr
 |_.loadGen()|Will load from the save file and put directly into the GAs first generation (replaces _.makeFirstGen()|- |-
 
 Make sure to not edit the txt file once it has been created otherwise it won't be readable.
-## <u>GA optimisation</u>
+## <ins>GA optimisation</ins>
 
-## <u>Extra</u>
+## <ins>Extra</ins>

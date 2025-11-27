@@ -165,7 +165,7 @@ int main(){
     return 0;
 }
 ```
-
+This is the fitness function in my example for a word guesser
 ## <u>Graphs</u>
 
 This library has inbuilt graphing functions and different themes for them too. 

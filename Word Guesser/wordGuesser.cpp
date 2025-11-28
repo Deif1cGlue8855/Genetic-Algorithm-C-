@@ -1,18 +1,4 @@
 #include "GA.hpp"
-/*
- 
-
-How to make the libraries universal
-===================================
-(Arch)
-sudo cp #####.hpp /usr/local/include/
-
-(Windows)
-place .hpp files into 
-C:\Program Files\mingw64\include\
-
-
-*/
 
 //Creates the character set the GA may use
 std::vector<std::string> createBounds(){
@@ -45,20 +31,18 @@ std::string fileName = "wordGuessSave.txt";
 std::string target = "dkafgow g8ooq3g ro4qg2igr 892y3pq 34rqg ' '    arq k 9 23";
 
 int main(){
-    //initialise the RNG so multiple GA's can be used
     initRNG();
+
     std::vector<std::string> charBounds = createBounds();
-    //Instantiating the GA class
     GA ga(100,target.size(),0.03,fileName, charBounds, 1);
     ga.makeFirstGen();
-    //ga.loadGen();
     int i = 0;
     while(true){
         ga.setFitness(fitnessFunction(ga.getDNAList(), target));
         ga.sortFitness();
         ga.crossover(4, 20);
         ga.applyMutation();
-        //ga.changeMutation(0.01, 0.01, 0.1);
+        ga.changeMutation();
         i++;
         if(i % 1 == 0){
             ga.initScreen();

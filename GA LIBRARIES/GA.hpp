@@ -89,9 +89,6 @@ class GA{
         std::string genRandGene();
         void setDNA(std::vector<DNA> importList);
 
-        int hamming(DNA list1, DNA list2);
-        float populationDiversity();
-
         //Quick sort methods
         void swapIndexes(int iOne, int iTwo);
         void quickSort(int lp, int hp);
@@ -322,51 +319,6 @@ inline void GA::applyMutation(){
 
 //STILL NEEDS WORKING ON
 inline void GA::changeMutation(){
-    float nMut = 0.03;
-    float rMut = 0.3;
-    float dMin = 0.15;
-    float dMax = 0.50;
-
-
-    float D = populationDiversity();
-
-    if(D < dMin){
-        this->mutationRate = rMut;
-    }
-    else if(D > dMax){
-        this->mutationRate = nMut;
-    }
-    else{
-        float ratio = (dMax - D) / (dMax - dMin);
-        this->mutationRate = nMut + ratio * (rMut - nMut);
-    }
-}
-
-inline float GA::populationDiversity(){
-    int N = this->numOfDNA;
-    int L = this->DNALength;
-
-    float pairs,total = 0;
-
-    for(int i = 0; i < this->numOfDNA; i++){
-        for(int j = i; j < this->numOfDNA;j++){
-            int dist = hamming(this->DNAList[i], this->DNAList[j]);
-            total += dist;
-            pairs += 1;
-        }
-    }
-
-    return total/pairs;
-}
-
-inline int GA::hamming(DNA d1, DNA d2){
-    int dist = 0;
-    for(int i = 0; i < this->DNALength; i++){
-        if(d1.getValueAt(i) == d2.getValueAt(i)){
-            dist += 1;
-        }
-    }
-    return dist;
 }
 
 //Modifying the gene list

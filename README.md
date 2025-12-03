@@ -203,7 +203,7 @@ The GA is able to save the progress it has done. It does this by saving the curr
 |_.saveGen()|Will save the current generation into the inputted file name. Will create the file if it doesn't exist|- |-
 |_.loadGen()|Will load from the save file and put directly into the GAs first generation (replaces _.makeFirstGen()|- |-
 
-Make sure to not edit the txt file once it has been created otherwise it won't be readable.
+Make sure to not edit the text file once it has been created otherwise it won't be readable.
 ## <ins>GA optimisation</ins>
 
 ## <ins>Extra</ins>

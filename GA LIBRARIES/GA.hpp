@@ -112,6 +112,13 @@ class GA{
         GA(int numOfDNA, int DNALength, float mutationRate, std::string saveLocation,std::vector<std::string> allPosVals, int charSet);
         //Any other methods
         void showInfo(int width);
+
+        int getNumOfDNA();
+        int getDNALength();
+        float getMutationRate();
+        std::string getSaveLocation();
+        int getCorrectGuessGen();
+        std::string getBestGuess();
         
         //Learning methods
         void sortFitness();
@@ -217,6 +224,14 @@ inline void GA::showInfo(int w){
         }
     }
 }
+
+//Getter methods
+inline int GA::getDNALength(){return this->DNALength;}
+inline int GA::getNumOfDNA(){return this->numOfDNA;}
+inline float GA::getMutationRate(){return this->mutationRate;}
+inline std::string GA::getSaveLocation(){return this->saveLocation;}
+inline int GA::getCorrectGuessGen(){return this->correctGuessGen;}
+inline std::string GA::getBestGuess(){return this->bestGuess;}
 
 //Quick sort methods
 inline void GA::sortFitness(){

@@ -119,6 +119,7 @@ class GA{
         std::string getSaveLocation();
         int getCorrectGuessGen();
         std::string getBestGuess();
+        int getGenNumber();
         
         //Learning methods
         void sortFitness();
@@ -232,6 +233,7 @@ inline float GA::getMutationRate(){return this->mutationRate;}
 inline std::string GA::getSaveLocation(){return this->saveLocation;}
 inline int GA::getCorrectGuessGen(){return this->correctGuessGen;}
 inline std::string GA::getBestGuess(){return this->bestGuess;}
+inline int GA::getGenNumber(){return this->generation;}
 
 //Quick sort methods
 inline void GA::sortFitness(){

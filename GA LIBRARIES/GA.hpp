@@ -12,6 +12,8 @@ TO DO LIST:
 - Steps to halt at each generation 
 - Set in proper error messages (such as mutation rate being > 1)
 - Fix the bars so they don't work on % 
+- Add some way of the number of DNA selected for Crossover gets reduced
+
 */
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -101,6 +103,7 @@ class GA{
         void printAt(std::string text, int x, int y, const RGB& colour);
         void getTerminalDim();
         static void cleanUp(int n);
+        static void sendError(std::string error);
         
         //Data visualisation methods
         void bar(int w, int l,int full, std::string message, const RGB& colour);
@@ -120,6 +123,7 @@ class GA{
         int getCorrectGuessGen();
         std::string getBestGuess();
         int getGenNumber();
+        float getBestFitness();
         
         //Learning methods
         void sortFitness();
@@ -155,6 +159,7 @@ class GA{
 
 inline GA::GA(int numOfDNA, int DNALength, float mutationRate, std::string saveLocation,std::vector<std::string> allPosVals, int charSet){
     this->charSet = charSet;
+    if(mutationRate <= 0 || mutationRate >= 1){sendError("Mutation rate outside of possible range");}
     this->mutationRate = mutationRate;
     this->baseMutationRate = mutationRate;
     this->numOfDNA = numOfDNA;
@@ -162,6 +167,16 @@ inline GA::GA(int numOfDNA, int DNALength, float mutationRate, std::string saveL
     this->saveLocation = saveLocation;
     this->allPosVals = allPosVals;
     std::signal(SIGINT, cleanUp);
+}
+
+inline void GA::sendError(std::string message){
+    //exits the 
+    std::cout << "\033[?1049l";
+    std::cout.flush();
+
+    std::cout << "\x1b[?25h";
+    std::cout << "\u001b[31m[ERROR] " + message + "\u001b[0m" << std::endl;
+    exit(1);
 }
 
 //Used for debugging, it shows all data on the GA 
@@ -209,6 +224,8 @@ inline void GA::showInfo(int w){
     {"Current M.rate: ", gruvCream}, nLine, {std::to_string(this->baseMutationRate), gruvGreen}, nLine,
     //Terminal size
     {"Terminal size: ", gruvCream}, nLine, {"[", gruvCream}, {std::to_string(this->screenSize[0]), gruvRed}, {",", gruvCream}, {std::to_string(this->screenSize[1]), gruvRed},{"]", gruvCream}, nLine,
+    //Shows best fitness
+    {"Gen best fitness: ", gruvCream}, nLine, {std::to_string(this->fitnesses[0]), gruvYellow}, nLine,
     //Shows the generation it got it at
     {"Got at gen: ", gruvCream}, nLine, {std::to_string(this->correctGuessGen), gruvBlue}, nLine,
     //Shows best guess
@@ -234,6 +251,9 @@ inline std::string GA::getSaveLocation(){return this->saveLocation;}
 inline int GA::getCorrectGuessGen(){return this->correctGuessGen;}
 inline std::string GA::getBestGuess(){return this->bestGuess;}
 inline int GA::getGenNumber(){return this->generation;}
+inline float GA::getBestFitness(){return this->fitnesses[0];}
+//EXISTED BEFORE
+inline std::vector<DNA> GA::getDNAList(){return this->DNAList;}
 
 //Quick sort methods
 inline void GA::sortFitness(){
@@ -290,6 +310,7 @@ inline void GA::swapIndexes(int iOne, int iTwo){
 
 //Sets the fitnesses to a list
 inline void GA::setFitness(std::vector<float> newFitness){
+    if(newFitness.size() != this->numOfDNA){sendError("Number of fitnesses dont align with number of DNA");}
     this->fitnesses = newFitness;
     float total = 0;
     //for the average fitness
@@ -298,6 +319,7 @@ inline void GA::setFitness(std::vector<float> newFitness){
 }
 //Slice current genes
 inline void GA::crossover(int numOfSections, int topGenes){
+    if(topGenes > this->numOfDNA){sendError("Crossover too many genes selected");}
     std::vector<DNA> newGen;
     DNA tempDNA;
     int cutPoint = this->DNALength/numOfSections;
@@ -344,6 +366,7 @@ inline void GA::setDNA(std::vector<DNA> tempLst){
     this->DNAList = tempLst; }
 
 inline std::string GA::genRandGene(){
+    //Generates a DNA with random genes from the inputted list
     int randNum = rand() % this->allPosVals.size();
     return this->allPosVals[randNum];
 }
@@ -360,9 +383,6 @@ inline void GA::makeFirstGen(){
     }
 }
 
-inline std::vector<DNA> GA::getDNAList(){
-    return this->DNAList;
-}
 
 //Saving and reading from text file
 inline bool GA::checkSaveLocation(bool createNew){
@@ -406,7 +426,7 @@ inline bool GA::checkSaveLocation(bool createNew){
         else{
             //Only during the READING file command
             //Will return with a message that the file hasn't been found and will quit the program
-            std::cout << "FILE PATH NOT FOUND" << std::endl;
+            sendError("Save file can't be found");
             return false;
         }
     }
@@ -537,7 +557,8 @@ inline void GA::printBuffer(){
 
 }
 
-inline  void GA::cleanUp(int n){
+inline void GA::cleanUp(int n){
+    //exits the 
     std::cout << "\033[?1049l";
     std::cout.flush();
 

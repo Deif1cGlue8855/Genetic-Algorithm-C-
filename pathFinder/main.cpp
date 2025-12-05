@@ -114,11 +114,11 @@ std::vector<float> fitnessFunction(std::vector<std::vector<point>> poses, int go
         //Reach goal reward
         const float goalR = 1000;
         //Collistion penalty
-        const float collP = 10;
+        const float collP = 50;
         //Path length penalty
         const float pathP = 1;
         //Distance penalty
-        const float distP = 2;
+        const float distP = 1;
         
         int pointLookAt = poses[i].size() - 1; 
         
@@ -148,23 +148,27 @@ std::vector<float> fitnessFunction(std::vector<std::vector<point>> poses, int go
 }
 
 int main(){
-    InitWindow(1000,1000,"GA Path finder");
-
-    int start[2] = {1,1};
-    int goal[2] = {48,48};
 
     //Sets the inputs to be only U, D, L and R
     std::vector<std::string> charSet = {"U", "D", "L", "R"};
     //Instantiating the GA
     GA ga(100,2500, 0.03, "PathSave.txt", charSet, 1);
+    InitWindow(1000,1000,"GA Path finder");
+
+    initRNG();
+
+    int start[2] = {1,1};
+    int goal[2] = {48,48};
+
     //Create the first gen 
-    ga.makeFirstGen();
+    //ga.makeFirstGen();
+    ga.loadGen();
 
     int IT = 0;
     std::vector<std::vector<point>> paths;
 
     while(!WindowShouldClose()){
-        
+
 
         paths.clear();
         for(DNA x : ga.getDNAList()){
@@ -179,10 +183,10 @@ int main(){
         ga.saveGen();
             
         if(IT == 0){
-            for(int it = 0; it < 2500; it++){
+            for(int it = 0; it < ga.getDNALength(); it++){
+
                 BeginDrawing();
                 ClearBackground(GRAY);
-
                 //Prints the map
                 for(int y = 0; y < by; y++){
 
@@ -217,7 +221,7 @@ int main(){
 
                 DrawText(ga.getBestGuess().c_str(),0,0,20, WHITE);
                 DrawText(std::to_string(ga.getGenNumber()).c_str(),0,20,20, WHITE);
-
+                DrawText(std::to_string(ga.getBestFitness()).c_str(),0,40,20, WHITE);
 
                 EndDrawing();
             }
@@ -227,5 +231,6 @@ int main(){
 
     }
     CloseWindow();
+
     return 0;
 }

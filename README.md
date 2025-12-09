@@ -8,6 +8,7 @@
 - [Fitness function](#fitness-function)
 - [Graphs](#graphs)
 - [Reading and Writing to a file](#saving)
+- [Debugging / getters](#debugging-and-getters)
 - [Optimisation](#ga-optimisation)
 - [Extra](#extra)
 
@@ -204,11 +205,29 @@ The GA is able to save the progress it has done. It does this by saving the curr
 |_.loadGen()|Will load from the save file and put directly into the GAs first generation (replaces _.makeFirstGen()|- |-
 
 Make sure to not edit the text file once it has been created otherwise it won't be readable.
+
+## <ins> Debugging and Getters </ins>
+
+In the case you are using the GA with a program that locks you out of the terminal or you need to find som errors in the code, I have implemented a few getters to help with that.
+
+|Function|Description|Return data type|
+|--------|-----------|----------------|
+|.getNumOfDNA()|This will return the number of DNA that exist in the GA|int|
+|.getDNALength()|This will return the number of genes in each DNA strand|int|
+|.getMutationRate()|This will return the current mutation rate|float|
+|.getSaveLocation()|This will return the file name where the saves will be made|std::string|
+|.getCorrectGuessGen()|This will return the generation where the first successful attempt was made|int|
+|.getBestGuess()|This will return the best guess of each generation|std::string|
+|.getGenNumber()|This will return the current generation number|int|
+|.getBestFitness()|This will return the best fitness accieved each generation|float|
+|.getCrossoverRate()|This will return the current crossover rate|float|
+.getFitnesses()|This will return all the fitnesses in the GA|std::vector<float>|
+
 ## <ins>GA optimisation</ins>
 
 ## <ins>Extra</ins>
 
-Heres the whole example for the word guesser. You may use it to see what a finished project should look like: 
+Here's the whole example for the word guesser. You may use it to see what a finished project should look like: 
 
 ```cpp
 #include "GA.hpp"

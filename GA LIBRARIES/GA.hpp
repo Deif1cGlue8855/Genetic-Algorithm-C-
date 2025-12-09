@@ -43,6 +43,7 @@ class GA{
     private: 
         //All of the attributes for the class
         float mutationRate;
+        float crossoverRate;
         float baseMutationRate;
         int simCount = 0;
 
@@ -112,7 +113,7 @@ class GA{
         //METHODS THAT THE USER WILL BE ABLE TO USE
 
         //Instantiation method 
-        GA(int numOfDNA, int DNALength, float mutationRate, std::string saveLocation,std::vector<std::string> allPosVals, int charSet);
+        GA(int numOfDNA, int DNALength, float mutationRate, float crossoverRate, std::string saveLocation,std::vector<std::string> allPosVals, int charSet);
         //Any other methods
         void showInfo(int width);
 
@@ -124,6 +125,8 @@ class GA{
         std::string getBestGuess();
         int getGenNumber();
         float getBestFitness();
+        float getCrossoverRate();
+        std::vector<float> getFitnesses();
         
         //Learning methods
         void sortFitness();
@@ -157,7 +160,7 @@ class GA{
 
 //METHOD WRITING
 
-inline GA::GA(int numOfDNA, int DNALength, float mutationRate, std::string saveLocation,std::vector<std::string> allPosVals, int charSet){
+inline GA::GA(int numOfDNA, int DNALength, float mutationRate, float crossoverRate, std::string saveLocation,std::vector<std::string> allPosVals, int charSet){
     this->charSet = charSet;
     if(mutationRate <= 0 || mutationRate >= 1){sendError("Mutation rate outside of possible range");}
     this->mutationRate = mutationRate;
@@ -166,7 +169,8 @@ inline GA::GA(int numOfDNA, int DNALength, float mutationRate, std::string saveL
     this->DNALength = DNALength; 
     this->saveLocation = saveLocation;
     this->allPosVals = allPosVals;
-    std::signal(SIGINT, cleanUp);
+    this->crossoverRate = crossoverRate;
+    //std::signal(SIGINT, cleanUp);
 }
 
 inline void GA::sendError(std::string message){
@@ -252,6 +256,8 @@ inline int GA::getCorrectGuessGen(){return this->correctGuessGen;}
 inline std::string GA::getBestGuess(){return this->bestGuess;}
 inline int GA::getGenNumber(){return this->generation;}
 inline float GA::getBestFitness(){return this->fitnesses[0];}
+inline float GA::getCrossoverRate(){return this->crossoverRate;}
+inline std::vector<float> GA::getFitnesses(){return this->fitnesses;}
 //EXISTED BEFORE
 inline std::vector<DNA> GA::getDNAList(){return this->DNAList;}
 
@@ -310,7 +316,7 @@ inline void GA::swapIndexes(int iOne, int iTwo){
 
 //Sets the fitnesses to a list
 inline void GA::setFitness(std::vector<float> newFitness){
-    if(newFitness.size() != this->numOfDNA){sendError("Number of fitnesses dont align with number of DNA");}
+    if(newFitness.size() != this->numOfDNA){sendError("Number of fitnesses don't align with number of DNA");}
     this->fitnesses = newFitness;
     float total = 0;
     //for the average fitness
@@ -331,13 +337,14 @@ inline void GA::crossover(int numOfSections, int topGenes){
             //Adds the GENES in the individual sections
             for(int k = 0; k < cutPoint; k++){
                 if(j + k < this->DNALength){
+                    //ADD CROSSOVER RATE 
+                    //double boundry = static_cast<double>(rand()) / RAND_MAX;
                     tempDNA.addGene(this->DNAList[randDNA].getValueAt(j+k));
                 }
             }
         }
         //Finished making a DNA strand
         newGen.push_back(tempDNA);
-        tempDNA.clearDNA();
         tempDNA.clearDNA();
     }
     this->DNAList = newGen;
@@ -347,9 +354,9 @@ inline void GA::crossover(int numOfSections, int topGenes){
 //Applies mutation to current generation (hopefully once it's been set to the new generation)
 inline void GA::applyMutation(){
     for(auto& DNAstrands :this->DNAList){
-        for(int i = 0; i < this->DNALength; i++){
+        for(int i = 0; i < DNAstrands.getLength(); i++){
             double boundry = static_cast<double>(rand()) / RAND_MAX;
-            if(boundry < mutationRate){
+            if(boundry < this->mutationRate){
                 DNAstrands.setValueAt(genRandGene(), i);
             }
         }
@@ -358,6 +365,7 @@ inline void GA::applyMutation(){
 
 //STILL NEEDS WORKING ON
 inline void GA::changeMutation(){
+    this->mutationRate = this->baseMutationRate * std::exp(-0.001 * this->generation);
 }
 
 //Modifying the gene list

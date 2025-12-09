@@ -34,7 +34,7 @@ int main(){
     initRNG();
 
     std::vector<std::string> charBounds = createBounds();
-    GA ga(100,target.size(),0.03,fileName, charBounds, 1);
+    GA ga(100,target.size(),0.03, 1,fileName, charBounds, 1);
     ga.makeFirstGen();
     int i = 0;
     while(true){

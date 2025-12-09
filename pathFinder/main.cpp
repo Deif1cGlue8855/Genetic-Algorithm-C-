@@ -160,8 +160,8 @@ int main(){
     int goal[2] = {48,48};
 
     //Create the first gen 
-    ga.makeFirstGen();
-    //ga.loadGen();
+    //ga.makeFirstGen();
+    ga.loadGen();
 
     int IT = 0;
     std::vector<std::vector<point>> paths;

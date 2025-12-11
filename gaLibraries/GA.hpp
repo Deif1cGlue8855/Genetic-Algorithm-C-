@@ -8,8 +8,12 @@ $OutputEncoding = [Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
 TO DO LIST:
 - Reduce mutation rate functions (differernt ways)
 - More graph types
-- Set in proper error messages (such as mutation rate being > 1)
 - Add some way of the number of DNA selected for Crossover gets reduced
+- Add elitism (best genes won't change) 
+
+AMENDED:
+- Crossover function redone 
+- Crossover rate used now
 
 */
 
@@ -147,6 +151,7 @@ class GA{
 
         //Data visualisation methods
         void drawBars(int numPrevAverage);
+        void lineGraph();
         void initScreen();
         void clearScreen();
         void printBuffer();
@@ -329,14 +334,20 @@ inline void GA::crossover(int numOfSections, int topGenes){
     //For loop for whole new DNA strand
     for(int i = 0; i < this->numOfDNA; i++){
         //Selecting the differetn sections 
+        int p1 = rand() % topGenes;
+        int p2 = rand() % topGenes;
         for(int j = 0; j < this->DNALength; j+= cutPoint){
-            int randDNA = rand() % topGenes;
             //Adds the GENES in the individual sections
             for(int k = 0; k < cutPoint; k++){
                 if(j + k < this->DNALength){
                     //ADD CROSSOVER RATE 
-                    //double boundry = static_cast<double>(rand()) / RAND_MAX;
-                    tempDNA.addGene(this->DNAList[randDNA].getValueAt(j+k));
+                    double boundry = static_cast<double>(rand()) / RAND_MAX;
+                    if(boundry <= this->crossoverRate){
+                        tempDNA.addGene(this->DNAList[p2].getValueAt(j+k));
+                    }
+                    else{
+                        tempDNA.addGene(this->DNAList[p1].getValueAt(j+k));
+                    }
                 }
             }
         }
@@ -652,6 +663,24 @@ inline void GA::drawBars(int numPrevAverage){
             bar(3, (barAmount * 5) + 1, aveInt, message, gruvRed);  
         }
     }
+}
+
+
+inline void GA::lineGraph(){
+    initScreen();
+    for(int y = 1; y < this->screenSize[0] + 1; y++){
+        for(int x = 1; x < this->screenSize[1] + 1; x++){
+            printAt(" ", x, y, white);
+        }
+    }
+    for(int y = 1; y < this->screenSize[0] + 1; y++){
+        printAt(this->charSets[this->charSet][1], 1, y, gruvCream);
+    }
+    for(int x = 2; x < this->screenSize[1] + 1; x++){
+        printAt(this->charSets[this->charSet][0], x, this->screenSize[0] / 2, gruvCream);
+    }
+
+    printAt("X", this->screenSize[1] / 2, 15, gruvCream);
 }
 
 inline void GA::pause(){

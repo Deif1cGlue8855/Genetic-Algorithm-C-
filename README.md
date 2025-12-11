@@ -221,9 +221,17 @@ In the case you are using the GA with a program that locks you out of the termin
 |.getGenNumber()|This will return the current generation number|int|
 |.getBestFitness()|This will return the best fitness accieved each generation|float|
 |.getCrossoverRate()|This will return the current crossover rate|float|
-.getFitnesses()|This will return all the fitnesses in the GA|std::vector<float>|
+|.getFitnesses()|This will return all the fitnesses in the GA|std::vector<float>|
 
 ## <ins>GA optimisation</ins>
+
+There are a few tips I can give to help optimise your GA.
+
+1) Set the ```topGenes``` parameter in the ```.crossover()``` function to 10% - 30%
+2) ```mutationRate``` when instantiating should be between 0.5% - 5.0%
+3) Keep the ```crossoverRate``` in the ```.crossover()``` function to 60% - 95%
+4) Have your ```population``` during instantiation to 50 - 200 DNA strands
+
 
 ## <ins>Extra</ins>
 

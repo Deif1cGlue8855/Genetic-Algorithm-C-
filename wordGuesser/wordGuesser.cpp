@@ -28,13 +28,14 @@ std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
 }
 
 std::string fileName = "wordGuessSave.txt";
-std::string target = "dkafgow g8ooq3g ro4qg2igr 892y3pq 34rqg ' '    arq k 9 23";
+std::string target = "Hallo Oma Aus Deutchland";
+
 
 int main(){
     initRNG();
 
     std::vector<std::string> charBounds = createBounds();
-    GA ga(100,target.size(),0.03, 0.4,fileName, charBounds, 1);
+    GA ga(100,target.size(),0.03, 0.4,fileName, charBounds, 0);
     ga.makeFirstGen();
     int i = 0;
     while(true){

@@ -9,7 +9,7 @@ TO DO LIST:
 - Reduce mutation rate functions (differernt ways)
 - More graph types
 - Add some way of the number of DNA selected for Crossover gets reduced
-- Add elitism (best genes won't change) 
+- Add elitism (best genes won't change) <- THIS IS VERY EASY TO IMPLEMENT
 
 AMENDED:
 - Crossover function redone 

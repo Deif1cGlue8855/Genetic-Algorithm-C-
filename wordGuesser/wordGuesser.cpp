@@ -40,7 +40,6 @@ std::string fileName = "wordGuessSave.txt";
 std::string target = "dkafgow g8ooq3g ro4qg2igr 892ypq 34rqg ' '    arq k 9 23";
 
 
-
 int main(){
     //Initialises RNG so multiple GA's can be used
     initRNG();

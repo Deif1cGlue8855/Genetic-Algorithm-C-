@@ -17,9 +17,12 @@ AMENDED:
 
 */
 
+//Tests if the OS is windoes
 #if defined(_WIN32) || defined(_WIN64)
+//uses windows library
     #include <windows.h>
 #else
+//Else use mac / linux libraries
     #include <sys/ioctl.h>
     #include <unistd.h>
 #endif

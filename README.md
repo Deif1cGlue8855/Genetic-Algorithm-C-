@@ -46,7 +46,7 @@ It will then feed this new generation back into the GA and repeat the whole proc
 This project is my attempt at creating this algorithm / AI.
 
 It works of two main classes being used. Those being the GA class and DNA class.
-## <ins>Set up </ins>
+## <ins>Set up</ins>
 
 Download the two .hpp files needed (GA.hpp, DNA.hpp)
 

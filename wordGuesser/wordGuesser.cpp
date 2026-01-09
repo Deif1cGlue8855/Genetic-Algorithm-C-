@@ -39,7 +39,6 @@ std::string fileName = "wordGuessSave.txt";
 //Target string
 std::string target = "dkafgow g8ooq3g ro4qg2igr 892ypq 34rqg ' '    arq k 9 23";
 
-
 int main(){
     //Initialises RNG so multiple GA's can be used
     initRNG();
@@ -62,7 +61,8 @@ int main(){
         i++;
         //Only show the graphics every 1 generation 
         if(i % 1 == 0){
-            ga.drawBars(10);
+            //ga.drawBars(10);
+            ga.lineGraph();
             ga.showInfo(target.size());
             ga.saveGen();
             ga.printBuffer();

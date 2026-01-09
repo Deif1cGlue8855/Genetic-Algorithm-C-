@@ -82,13 +82,14 @@ No extra lines of compilation are required
 In order to create the GA object you need to write:
 
 ```cpp
-GA gaName(100, 5, 0.03, "SaveLocation.txt", characterSet, 1);
+GA gaName(100, 5, 0.03, 0.4, "SaveLocation.txt", characterSet, 1);
 ```
 |Parameter name|Parameter|Description|Data type|
 |--------------|---------|-----------|---------|
 |No. DNA|100| How many DNA strands you want to be working with| int|
 |DNA lenght|5| How many characters the DNA will have| int|
 |Mutation rate|0.03| The chance that any gene in the DNA will change to a random character within the character set| float |
+|Crossover rate|0.4| The chance that the crossover will actuall result in change| float |
 |Save location |"SaveLocation.txt"| Enter the address of where you want the save data to be written to| std::string|
 |Character set| characterSet| A list of all the characters the GA may use as it's learning| std::vector\<std::string\>|
 |Graph theme|1| Select the characters that will be used to represent the graphs|int|

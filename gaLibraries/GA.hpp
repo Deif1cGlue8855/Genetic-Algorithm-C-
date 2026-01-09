@@ -10,6 +10,7 @@ TO DO LIST:
 - More graph types
 - Add some way of the number of DNA selected for Crossover gets reduced
 - Add elitism (best genes won't change) <- THIS IS VERY EASY TO IMPLEMENT
+- Change the 'has gotten' function so it can be changed by the user 
 
 AMENDED:
 - Crossover function redone 
@@ -73,6 +74,7 @@ class GA{
         int barLength = 0;
         bool correctGuess = false;
         int correctGuessGen = -1;
+
     
         //Preset colours for graphics
         RGB white = {255,255,255};
@@ -153,7 +155,7 @@ class GA{
         void loadGen();
 
         //Data visualisation methods
-        void drawBars(int numPrevAverage);
+        void barGraph(int numPrevAverage);
         void lineGraph();
         void initScreen();
         void clearScreen();
@@ -626,7 +628,7 @@ inline void GA::bar(int h, int y, int fullBar, std::string message, const RGB& c
     printAt(line,1,y,white);
 }
 
-inline void GA::drawBars(int numPrevAverage){
+inline void GA::barGraph(int numPrevAverage){
     initScreen();
     //Add colour to the bars to make them look more interesting
     //WILL NEED UTF-8 AS CHARCTER SET
@@ -671,19 +673,60 @@ inline void GA::drawBars(int numPrevAverage){
 
 inline void GA::lineGraph(){
     initScreen();
+
+    //Clears screen
     for(int y = 1; y < this->screenSize[0] + 1; y++){
         for(int x = 1; x < this->screenSize[1] + 1; x++){
             printAt(" ", x, y, white);
         }
     }
+
+    //For line graph
+    int lineMid = 0;
+    int lineUpperVal = 0;
+    int lineLowerVal = 0;
+
+    int numOfGens = this->screenSize[1] / 5;
+    
+    if(numOfGens > averageFitness.size()){
+        for(int i = averageFitness.size() - numOfGens - 1; i < averageFitness.size(); i++){
+            //Finds if it needs to change the maximum or the minimum value
+            if(averageFitness[averageFitness.size() - 1] < lineLowerVal){
+                lineLowerVal = averageFitness[averageFitness.size() - 1];
+            }
+            else if(averageFitness[averageFitness.size() - 1] > lineUpperVal){
+                lineUpperVal = averageFitness[averageFitness.size() - 1];
+            }
+        }
+    }
+
+    //Some variables requred to figure out where the horizontal line goes
+    int range = lineUpperVal - lineLowerVal;
+    int dist = range / this->screenSize[0];
+
+    //Finds the closes match to where 0 should be
+    for(int i = 0; i < this->screenSize[0]; i++){
+        int tempLow = lineUpperVal + (dist * i); 
+        if(tempLow == 0){lineMid = this->screenSize[0] - i; break;}
+    }
+
+    //Draws vertical bar
     for(int y = 1; y < this->screenSize[0] + 1; y++){
         printAt(this->charSets[this->charSet][1], 1, y, gruvCream);
     }
-    for(int x = 2; x < this->screenSize[1] + 1; x++){
-        printAt(this->charSets[this->charSet][0], x, this->screenSize[0] / 2, gruvCream);
-    }
 
-    printAt("X", this->screenSize[1] / 2, 15, gruvCream);
+    //Draws horizontal bar
+    for(int x = 2; x < this->screenSize[1] + 1; x++){
+        printAt(this->charSets[this->charSet][0], x, lineMid, gruvCream);
+    }
+    
+    //Draws all previous generations
+    if(numOfGens > averageFitness.size()){
+        int it = 5;
+        for(int i = averageFitness.size() - numOfGens - 1; i < averageFitness.size(); i++){
+            it+= 5;
+        }
+    }
 }
 
 inline void GA::pause(){

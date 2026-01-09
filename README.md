@@ -179,7 +179,7 @@ Currently, the only graphs it can produce are bar graphs that show the fitness o
 |Function| Description |Parameters|Parameter data types|
 |--------|-------------|----------|--------------------|
 |_.initScreen()|This will get the size of the terminal the GA is being run in and defines how many bars will be drawn and their size|- |-
-|_.drawBars()|This will actually draw the bars and a big bar at the bottom showing the average fitness of the last (inputted value) generations|numOfGenerations|int
+|_.barGraph()|This will actually draw the bars and a big bar at the bottom showing the average fitness of the last (inputted value) generations|numOfGenerations|int
 |_.showInfo()|Will show details about the GA in the top tight corner of the screen. It's height is set but you need to define it's width|widthOfWindow|int
 |_.printBuffer()| This will print everything and clear the buffer|- |-
 
@@ -284,8 +284,7 @@ int main(){
         ga.applyMutation();
         i++;
         if(i % 1 == 0){
-            ga.initScreen();
-            ga.drawBars(10);
+            ga.barGraph(10);
             ga.showInfo(target.size());
             ga.saveGen();
             ga.printBuffer();

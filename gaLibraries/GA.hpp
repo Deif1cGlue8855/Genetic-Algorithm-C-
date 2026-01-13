@@ -2,6 +2,7 @@
 #define GA_HPP
 
 /*
+
 How to use UTF-8 on powershell:
 $OutputEncoding = [Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
 
@@ -9,12 +10,14 @@ TO DO LIST:
 - Reduce mutation rate functions (differernt ways)
 - More graph types
 - Add some way of the number of DNA selected for Crossover gets reduced
-- Add elitism (best genes won't change) <- THIS IS VERY EASY TO IMPLEMENT
 - Change the 'has gotten' function so it can be changed by the user 
+- Change Documentation for crossover rate
+- Add all the getters as a version in word thingy
 
 AMENDED:
 - Crossover function redone 
 - Crossover rate used now
+- Added elitism
 
 */
 
@@ -139,7 +142,7 @@ class GA{
 
         void setFitness(std::vector<float> newFitness);
         //Slicing methods
-        void crossover(int numOfSections, int topGenes);
+        void crossover(int numOfSections, int topGenes, int elites);
         //Applies the mutation to the new generation
         void applyMutation();
         void changeMutation();
@@ -331,16 +334,19 @@ inline void GA::setFitness(std::vector<float> newFitness){
     this->averageFitness.push_back(total/this->numOfDNA);
 }
 //Slice current genes
-inline void GA::crossover(int numOfSections, int topGenes){
+inline void GA::crossover(int numOfSections, int topGenes, int elites){
     if(topGenes > this->numOfDNA){sendError("Crossover too many genes selected");}
     std::vector<DNA> newGen;
     DNA tempDNA;
     int cutPoint = this->DNALength/numOfSections;
     //For loop for whole new DNA strand
-    for(int i = 0; i < this->numOfDNA; i++){
+    for(int i = 0; i < elites; i++){
+        newGen.push_back(this->DNAList[i]);
+    }
+    for(int i = 0; i < this->numOfDNA - elites; i++){
         //Selecting the differetn sections 
-        int p1 = rand() % topGenes;
-        int p2 = rand() % topGenes;
+        int p1 = (rand() % topGenes);
+        int p2 = (rand() % topGenes);
         for(int j = 0; j < this->DNALength; j+= cutPoint){
             //Adds the GENES in the individual sections
             for(int k = 0; k < cutPoint; k++){
@@ -683,31 +689,31 @@ inline void GA::lineGraph(){
 
     //For line graph
     int lineMid = 0;
-    int lineUpperVal = 0;
-    int lineLowerVal = 0;
+    float lineUpperVal = 0;
+    float lineLowerVal = 0;
 
     int numOfGens = this->screenSize[1] / 5;
     
-    if(numOfGens > averageFitness.size()){
+    if(numOfGens < averageFitness.size()){
         for(int i = averageFitness.size() - numOfGens - 1; i < averageFitness.size(); i++){
             //Finds if it needs to change the maximum or the minimum value
-            if(averageFitness[averageFitness.size() - 1] < lineLowerVal){
-                lineLowerVal = averageFitness[averageFitness.size() - 1];
-            }
-            else if(averageFitness[averageFitness.size() - 1] > lineUpperVal){
-                lineUpperVal = averageFitness[averageFitness.size() - 1];
+            if(averageFitness[i] < lineLowerVal){
+                lineLowerVal = averageFitness[i];
+            } 
+
+            if(averageFitness[i] > lineUpperVal){
+                lineUpperVal = averageFitness[i];
             }
         }
     }
 
     //Some variables requred to figure out where the horizontal line goes
-    int range = lineUpperVal - lineLowerVal;
-    int dist = range / this->screenSize[0];
+    float range = lineUpperVal - lineLowerVal;
+    float dist = range / this->screenSize[0];
 
-    //Finds the closes match to where 0 should be
+    //Finds the closes match to where 0 line should be
     for(int i = 0; i < this->screenSize[0]; i++){
-        int tempLow = lineUpperVal + (dist * i); 
-        if(tempLow == 0){lineMid = this->screenSize[0] - i; break;}
+        //DO THIS
     }
 
     //Draws vertical bar
@@ -722,11 +728,13 @@ inline void GA::lineGraph(){
     
     //Draws all previous generations
     if(numOfGens > averageFitness.size()){
-        int it = 5;
-        for(int i = averageFitness.size() - numOfGens - 1; i < averageFitness.size(); i++){
-            it+= 5;
-        }
+        //DO THIS TOO
     }
+
+    printAt(std::to_string(lineMid), 10, 10, gruvCream);
+    printAt(std::to_string(lineUpperVal), 10, 20, gruvCream);
+    printAt(std::to_string(lineLowerVal), 10, 30, gruvCream);
+
 }
 
 inline void GA::pause(){

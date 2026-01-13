@@ -103,7 +103,7 @@ GA gaName(100, 5, 0.03, 0.4, "SaveLocation.txt", characterSet, 1);
 |_.makeFirstGen()|This will create a generation out of random genes (from the character set). This should be run once, straight after the GA instantiation|- |- 
 |_.setFitnesses()|This will set the all the fitnesses in the GA to the given list. Should have gone through the fitness function before this|listOfFitnesses|std::vector\<float> 
 |_.sortFitnesses()|This will sort the fitnesses and DNA strands into best performing to worst performing (using quick sort)|- |- 
-|_.crossover()|This will select how many of the best performing DNA will be chosen to make the next generation and how many pieces the DNA will be split up into|numOfSections, topGenes|int, int
+|_.crossover()|This will select how many of the best performing DNA will be chosen to make the next generation and how many pieces the DNA will be split up into. It also has elitism built in meaining that the top genes won't be changed, just passed through to the next generation|numOfSections, topGenes, elites|int, int, int
 |_.applyMutation()|This will apply the mutation rate to the newly created generation|- |- 
 
 These are the basic instructions needed to get the GA working.
@@ -113,14 +113,14 @@ An example of this would be:
     int main(){
         initRNG();
 
-        GA ga(100,target.size(),0.03,fileName, charBounds, 2);
+        GA ga(100,target.size(),0.03, 0.4,fileName, charBounds, 2);
         ga.makeFirstGen();
 
         while(true){
             ga.setFitness(listOfFitnesses);
             ga.sortFitness();
             //Will take the top 20 DNA and split them into 4 pieces
-            ga.crossover(4, 20);
+            ga.crossover(4, 20, 3);
             ga.applyMutation();
         }
     }
@@ -275,13 +275,13 @@ int main(){
     initRNG();
 
     std::vector<std::string> charBounds = createBounds();
-    GA ga(100,target.size(),0.03,fileName, charBounds, 1);
+    GA ga(100,target.size(),0.03, 0.4,fileName, charBounds, 1);
     ga.makeFirstGen();
     int i = 0;
     while(true){
         ga.setFitness(fitnessFunction(ga.getDNAList(), target));
         ga.sortFitness();
-        ga.crossover(4, 20);
+        ga.crossover(4, 20, 3);
         ga.applyMutation();
         i++;
         if(i % 1 == 0){

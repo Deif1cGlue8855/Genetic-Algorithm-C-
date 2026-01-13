@@ -55,7 +55,7 @@ int main(){
         //Learning process functions
         ga.setFitness(fitnessFunction(ga.getDNAList(), target));
         ga.sortFitness();
-        ga.crossover(4, 20);
+        ga.crossover(4, 20, 3);
         ga.applyMutation();
         ga.changeMutation();
         i++;

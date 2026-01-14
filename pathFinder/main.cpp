@@ -177,7 +177,7 @@ int main(){
         ga.setFitness(fitnessFunction(paths, goal, 100));
 
         ga.sortFitness();
-        ga.crossover(200, 5);
+        ga.crossover(200, 5, 10);
         ga.applyMutation();
         ga.saveGen();
             

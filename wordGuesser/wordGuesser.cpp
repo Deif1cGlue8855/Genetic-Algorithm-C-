@@ -27,10 +27,13 @@ std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
     for(auto& DNA : allDNA){
         float correct = 0;
         for(int i = 0; i < goal.length(); i++){
-            if(DNA.getValueAt(i) == std::string(1,goal[i])){correct++;}
+            //if(DNA.getValueAt(i) == std::string(1,goal[i])){correct++;}
+            if(DNA.getValueAt(i) == std::string(1,goal[i])){correct += 50;}
+            else{correct -= 40;}
         }
-        float percent = correct / goal.length();
-        allFitness.push_back(percent);
+        //float percent = correct / goal.length();
+        //allFitness.push_back(percent);
+        allFitness.push_back(correct);
     }
     return allFitness;
 }
@@ -61,7 +64,7 @@ int main(){
         i++;
         //Only show the graphics every 1 generation 
         if(i % 1 == 0){
-            //ga.drawBars(10);
+            //ga.barGraph(10);
             ga.lineGraph();
             ga.showInfo(target.size());
             ga.saveGen();

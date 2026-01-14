@@ -2,6 +2,9 @@
 #define GA_HPP
 
 /*
+TO MAKE IT GLOBAL:
+
+sudo cp GA.hpp /usr/local/include/
 
 How to use UTF-8 on powershell:
 $OutputEncoding = [Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
@@ -281,10 +284,12 @@ inline void GA::sortFitness(){
         tempStr += tList.getValueAt(i);
     }
     bestGuess = tempStr;
+    /*
     if(this->fitnesses[0] == 1 && !this->correctGuess){
         this->correctGuess = true; 
         this->correctGuessGen = this->generation;
     }
+    */
 }
 
 inline void GA::quickSort(int lp, int hp){
@@ -712,8 +717,12 @@ inline void GA::lineGraph(){
     float dist = range / this->screenSize[0];
 
     //Finds the closes match to where 0 line should be
-    for(int i = 0; i < this->screenSize[0]; i++){
-        //DO THIS
+    float closestY = 1000000000;
+    for(int i = 0; i < this->screenSize[0] + 1; i++){
+        if(std::abs(lineUpperVal - (dist * i)) < closestY){
+            closestY = std::abs(lineUpperVal - (dist * i));
+            lineMid = i;
+        }
     }
 
     //Draws vertical bar
@@ -727,14 +736,22 @@ inline void GA::lineGraph(){
     }
     
     //Draws all previous generations
-    if(numOfGens > averageFitness.size()){
-        //DO THIS TOO
+    if(numOfGens < averageFitness.size()){
+        for(int i = 0; i < numOfGens; i++){
+
+            float closestVal = 1000000000;
+            int line = 0;
+
+            for(int j = 0; j < this->screenSize[0] + 1; j++){
+                if(std::abs(averageFitness[(averageFitness.size() - numOfGens) + i] - (lineUpperVal - (dist * j))) < closestVal){
+                    closestVal = std::abs(averageFitness[(averageFitness.size() - numOfGens) + i] - (lineUpperVal - (dist * j)));
+                    line = j;
+                }
+            }
+
+            printAt("X", 2 + (5 * i) , line, gruvRed); 
+        }
     }
-
-    printAt(std::to_string(lineMid), 10, 10, gruvCream);
-    printAt(std::to_string(lineUpperVal), 10, 20, gruvCream);
-    printAt(std::to_string(lineLowerVal), 10, 30, gruvCream);
-
 }
 
 inline void GA::pause(){

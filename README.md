@@ -207,7 +207,7 @@ The GA is able to save the progress it has done. It does this by saving the curr
 
 Make sure to not edit the text file once it has been created otherwise it won't be readable.
 
-## <ins> Debugging and Getters </ins>
+## <ins>Debugging and Getters</ins>
 
 In the case you are using the GA with a program that locks you out of the terminal or you need to find some errors in the code, I have implemented a few getters to help with that.
 

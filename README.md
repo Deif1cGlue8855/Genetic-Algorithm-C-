@@ -209,7 +209,7 @@ Make sure to not edit the text file once it has been created otherwise it won't 
 
 ## <ins> Debugging and Getters </ins>
 
-In the case you are using the GA with a program that locks you out of the terminal or you need to find som errors in the code, I have implemented a few getters to help with that.
+In the case you are using the GA with a program that locks you out of the terminal or you need to find some errors in the code, I have implemented a few getters to help with that.
 
 |Function|Description|Return data type|
 |--------|-----------|----------------|

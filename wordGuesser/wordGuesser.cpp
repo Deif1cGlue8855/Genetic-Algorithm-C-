@@ -15,7 +15,8 @@ std::vector<std::string> createBounds(){
 }
 
 //Fitness function for this example
-std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
+std::vector<float> fitnessFunction(GA& ga, std::string target){
+    std::vector<DNA> allDNA = ga.getDNAList();
     std::string goal = target;
     std::vector<float> allFitness;
     /*
@@ -27,13 +28,11 @@ std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
     for(auto& DNA : allDNA){
         float correct = 0;
         for(int i = 0; i < goal.length(); i++){
-            //if(DNA.getValueAt(i) == std::string(1,goal[i])){correct++;}
-            if(DNA.getValueAt(i) == std::string(1,goal[i])){correct += 50;}
-            else{correct -= 40;}
+            if(DNA.getValueAt(i) == std::string(1,goal[i])){correct++;}
         }
-        //float percent = correct / goal.length();
-        //allFitness.push_back(percent);
-        allFitness.push_back(correct);
+        float percent = correct / goal.length();
+        if(percent == 1){ga.gotCorrect();}
+        allFitness.push_back(percent);
     }
     return allFitness;
 }
@@ -56,7 +55,7 @@ int main(){
     //Loops the learning forever
     while(true){
         //Learning process functions
-        ga.setFitness(fitnessFunction(ga.getDNAList(), target));
+        ga.setFitness(fitnessFunction(ga, target));
         ga.sortFitness();
         ga.crossover(4, 20, 3);
         ga.applyMutation();
@@ -66,12 +65,12 @@ int main(){
         if(i % 1 == 0){
             //ga.barGraph(10);
             ga.lineGraph();
-            //ga.showInfo(target.size());
+            ga.showInfo(target.size());
             ga.saveGen();
             ga.printBuffer();
-            ga.pause();
             //NEED TO CHANGE THE HAS GOTTEN THING
             if(ga.hasGotten()){
+                ga.pause();
             }
         }
     }

@@ -3,7 +3,6 @@
 
 /*
 TO MAKE IT GLOBAL:
-
 sudo cp GA.hpp /usr/local/include/
 
 How to use UTF-8 on powershell:
@@ -11,16 +10,10 @@ $OutputEncoding = [Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
 
 TO DO LIST:
 - Reduce mutation rate functions (differernt ways)
-- More graph types
 - Add some way of the number of DNA selected for Crossover gets reduced
 - Change the 'has gotten' function so it can be changed by the user 
 - Change Documentation for crossover rate
-- Add all the getters as a version in word thingy
-
-AMENDED:
-- Crossover function redone 
-- Crossover rate used now
-- Added elitism
+- Add the gotCorrect function to the documentation 
 
 */
 
@@ -39,7 +32,6 @@ AMENDED:
 #include <string>
 #include "DNA.hpp"
 #include <cmath>
-#include <csignal>
 #include <utility>
 #include <sstream>
 #include <fstream>
@@ -139,6 +131,8 @@ class GA{
         float getBestFitness();
         float getCrossoverRate();
         std::vector<float> getFitnesses();
+
+        void gotCorrect();
         
         //Learning methods
         void sortFitness();
@@ -183,7 +177,6 @@ inline GA::GA(int numOfDNA, int DNALength, float mutationRate, float crossoverRa
     this->saveLocation = saveLocation;
     this->allPosVals = allPosVals;
     this->crossoverRate = crossoverRate;
-    //std::signal(SIGINT, cleanUp);
 }
 
 inline void GA::sendError(std::string message){
@@ -285,11 +278,14 @@ inline void GA::sortFitness(){
     }
     bestGuess = tempStr;
     /*
-    if(this->fitnesses[0] == 1 && !this->correctGuess){
+    */
+}
+
+inline void GA::gotCorrect(){
+    if(!this->correctGuess){
         this->correctGuess = true; 
         this->correctGuessGen = this->generation;
     }
-    */
 }
 
 inline void GA::quickSort(int lp, int hp){

@@ -66,11 +66,12 @@ int main(){
         if(i % 1 == 0){
             //ga.barGraph(10);
             ga.lineGraph();
-            ga.showInfo(target.size());
+            //ga.showInfo(target.size());
             ga.saveGen();
             ga.printBuffer();
+            ga.pause();
+            //NEED TO CHANGE THE HAS GOTTEN THING
             if(ga.hasGotten()){
-                ga.pause();
             }
         }
     }

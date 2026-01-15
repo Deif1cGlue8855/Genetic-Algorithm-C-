@@ -119,7 +119,7 @@ An example of this would be:
         while(true){
             ga.setFitness(listOfFitnesses);
             ga.sortFitness();
-            //Will take the top 20 DNA and split them into 4 pieces
+            //Will take the top 20 DNA and split them into 4 pieces keeping the top 3 the same
             ga.crossover(4, 20, 3);
             ga.applyMutation();
         }
@@ -144,10 +144,13 @@ The command `_.getDNAList()` will return an `std::vector<DNA>`. This should be p
 
 Also use the `_.getValueAt()` function in the DNA to get the individual genes.
 
+The `_.gotCorrect()` function can be used in the fitness function to mark the first time the GA successfuly completed a task. This will make the GA note down what generation it made it's first correct guess at. This will only work if the GA is passed through by reference as a parameter into the function.
+
 Here's an example of how I would expect it to be done:
 
 ```cpp
-std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
+std::vector<float> fitnessFunction(GA& ga, std::string target){
+    std::vector<DNA> allDNA = ga.getDNAList();
     std::string goal = target;
     std::vector<float> allFitness;
 
@@ -157,14 +160,14 @@ std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
             if(DNA.getValueAt(i) == std::string(1,goal[i])){correct++;}
         }
         float percent = correct / goal.length();
+        if(percent == 1){ga.gotCorrect();}
         allFitness.push_back(percent);
     }
     return allFitness;
 }
 
 int main(){
-    std::vector<float> fitnesses = fitnessFunction(ga.getDNAList(), target)
-    return 0;
+    ga.setFitness(fitnessFunction(ga, target));
 }
 ```
 *this example is missing the fitness function*
@@ -173,7 +176,7 @@ int main(){
 
 This library has inbuilt graphing functions and different themes for them too. 
 
-The graphs are printed using [ANSI escape sequences](https://en.wikipedia.org/wiki/ANSI_escape_code) which is a native function to most computers allowing to print in different colours and at a specific location. My print functions don't have a 'clear screen' function since ever character is written over anyway.
+The graphs are printed using [ANSI escape sequences](https://en.wikipedia.org/wiki/ANSI_escape_code) which is a native function to most computers allowing to print in different colours and at a specific location. The print functions don't have a 'clear screen' function since ever character is written over anyway.
 
 Currently, the only graphs it can produce are bar graphs that show the fitness of the current generation.
 
@@ -181,6 +184,7 @@ Currently, the only graphs it can produce are bar graphs that show the fitness o
 |--------|-------------|----------|--------------------|
 |_.initScreen()|This will get the size of the terminal the GA is being run in and defines how many bars will be drawn and their size|- |-
 |_.barGraph()|This will actually draw the bars and a big bar at the bottom showing the average fitness of the last (inputted value) generations|numOfGenerations|int
+|_.lineGraph()|This will draw a line graph, representing the average fitness for the last few generations. The graph changes depending on the lowest and highest values it needs to show|- |-
 |_.showInfo()|Will show details about the GA in the top tight corner of the screen. It's height is set but you need to define it's width|widthOfWindow|int
 |_.printBuffer()| This will print everything and clear the buffer|- |-
 
@@ -196,6 +200,7 @@ Currently, the only graphs it can produce are bar graphs that show the fitness o
 ### Theme 4
 ![Alt image](Themes/Theme3.png)
                                                                                                                                                                                  
+The `_.lineGraph()` function should be the primary function used since the `_.barGraph()` can only be used if the fitnesses values are a percentage.
 ## <ins>Saving</ins>
 
 The GA is able to save the progress it has done. It does this by saving the current generationa and saving it to a text file.

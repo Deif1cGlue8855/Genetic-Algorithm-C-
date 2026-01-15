@@ -14,6 +14,7 @@ TO DO LIST:
 - Change the 'has gotten' function so it can be changed by the user 
 - Change Documentation for crossover rate
 - Add the gotCorrect function to the documentation 
+- Add dot graph to doccumentation
 
 */
 

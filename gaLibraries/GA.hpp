@@ -11,11 +11,6 @@ $OutputEncoding = [Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
 TO DO LIST:
 - Reduce mutation rate functions (differernt ways)
 - Add some way of the number of DNA selected for Crossover gets reduced
-- Change the 'has gotten' function so it can be changed by the user 
-- Change Documentation for crossover rate
-- Add the gotCorrect function to the documentation 
-- Add dot graph to doccumentation
-
 */
 
 //Tests if the OS is windoes
@@ -746,7 +741,7 @@ inline void GA::lineGraph(){
                 }
             }
 
-            printAt("X", 2 + (5 * i) , line, gruvRed); 
+            printAt("["+this->charSets[this->charSet][6]+"]", 2 + (5 * i) , line, gruvRed); 
         }
     }
 }

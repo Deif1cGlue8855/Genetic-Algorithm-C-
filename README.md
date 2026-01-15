@@ -244,9 +244,9 @@ There are a few tips I can give to help optimise your GA.
 Here's the whole example for the word guesser. You may use it to see what a finished project should look like: 
 
 ```cpp
+
 #include "GA.hpp"
 
-//Creates the character set
 std::vector<std::string> createBounds(){
     std::vector<std::string> tempList;
     for(int i = 36; i < 127; i++){
@@ -257,8 +257,8 @@ std::vector<std::string> createBounds(){
     return tempList;
 }
 
-//Fitness function for this example
-std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
+std::vector<float> fitnessFunction(GA& ga, std::string target){
+    std::vector<DNA> allDNA = ga.getDNAList();
     std::string goal = target;
     std::vector<float> allFitness;
 
@@ -268,13 +268,13 @@ std::vector<float> fitnessFunction(std::vector<DNA> allDNA, std::string target){
             if(DNA.getValueAt(i) == std::string(1,goal[i])){correct++;}
         }
         float percent = correct / goal.length();
+        if(percent == 1){ga.gotCorrect();}
         allFitness.push_back(percent);
     }
     return allFitness;
 }
-
 std::string fileName = "wordGuessSave.txt";
-std::string target = "dkafgow g8ooq3g ro4qg2igr 892y3pq 34rqg ' '    arq k 9 23";
+std::string target = "dkafgow g8ooq3g ro4qg2igr 892ypq 34rqg ' '    arq k 9 23";
 
 int main(){
     initRNG();
@@ -284,13 +284,14 @@ int main(){
     ga.makeFirstGen();
     int i = 0;
     while(true){
-        ga.setFitness(fitnessFunction(ga.getDNAList(), target));
+        ga.setFitness(fitnessFunction(ga, target));
         ga.sortFitness();
         ga.crossover(4, 20, 3);
         ga.applyMutation();
+        ga.changeMutation();
         i++;
         if(i % 1 == 0){
-            ga.barGraph(10);
+            ga.barGraph();
             ga.showInfo(target.size());
             ga.saveGen();
             ga.printBuffer();
@@ -301,5 +302,7 @@ int main(){
     }
     return 0;
 }
+
+
 
 ```

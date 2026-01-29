@@ -348,11 +348,15 @@ inline void GA::crossover(int numOfSections, int topGenes, int elites){
             //Adds the GENES in the individual sections
             for(int k = 0; k < cutPoint; k++){
                 if(j + k < this->DNALength){
-                    //ADD CROSSOVER RATE 
+                    //Creates a random number between 0 and 1
                     double boundry = static_cast<double>(rand()) / RAND_MAX;
+                    //Tests to see if that number is less than the crossover rate
+                    //
+                    //The higher the crossover rate, the more it will favour P2 DNA strand
                     if(boundry <= this->crossoverRate){
                         tempDNA.addGene(this->DNAList[p2].getValueAt(j+k));
                     }
+                    //The lower the crossover rate, the more it'll favour P1 DNA strand
                     else{
                         tempDNA.addGene(this->DNAList[p1].getValueAt(j+k));
                     }
@@ -734,6 +738,7 @@ inline void GA::lineGraph(){
             float closestVal = 1000000000;
             int line = 0;
 
+            //Finds what row is the closes to the actual value (finds the best Y position)
             for(int j = 0; j < this->screenSize[0] + 1; j++){
                 if(std::abs(averageFitness[(averageFitness.size() - numOfGens) + i] - (lineUpperVal - (dist * j))) < closestVal){
                     closestVal = std::abs(averageFitness[(averageFitness.size() - numOfGens) + i] - (lineUpperVal - (dist * j)));

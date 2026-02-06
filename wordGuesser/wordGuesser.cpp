@@ -1,5 +1,4 @@
 #include "GA.hpp"
-
 //Creates the character set the GA may use
 std::vector<std::string> createBounds(){
     std::vector<std::string> tempList;
@@ -13,7 +12,6 @@ std::vector<std::string> createBounds(){
     tempList.push_back(" ");
     return tempList;
 }
-
 //Fitness function for this example
 std::vector<float> fitnessFunction(GA& ga, std::string target){
     std::vector<DNA> allDNA = ga.getDNAList();
@@ -24,7 +22,6 @@ std::vector<float> fitnessFunction(GA& ga, std::string target){
     the letter in the same place in the goal string, eventually resulting with a percentage 
     on how accurate the guess was
     */
-
     for(auto& DNA : allDNA){
         float correct = 0;
         for(int i = 0; i < goal.length(); i++){
@@ -76,4 +73,3 @@ int main(){
     }
     return 0;
 }
-

@@ -32,7 +32,6 @@ TO DO LIST:
 #include <sstream>
 #include <fstream>
 #include <filesystem>
-
 struct RGB{
     int r,g,b;
 };

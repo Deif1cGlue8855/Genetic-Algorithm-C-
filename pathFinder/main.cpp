@@ -1,7 +1,6 @@
 #include <GA.hpp>
 #include <cmath>
 #include <raylib.h>
-#include <chrono>
 #include <unistd.h>
 
 //To compile raylib
@@ -188,20 +187,25 @@ int main(){
                 ClearBackground(GRAY);
                 //Prints the map
                 for(int y = 0; y < by; y++){
-
+                    
                     for(int x = 0; x < bx; x++){
+                        //Sets colour to gray by default
                         Color colour = GRAY;
 
+                        //If it's the start, draw it in red
                         if(x == start[0] && y == start[1]){
                             colour = RED;
                         }
+                        //If it's the goal, draw it in green
                         else if(x == goal[0] && y == goal[1]){
                             colour = GREEN;
                         }
+                        //Draw walls in black
                         else if(map[y][x] == 1){
                             colour = BLACK;
                         }
-
+                        
+                        //Draw the square with the colour chosen above 
                         DrawRectangle(br * x, br * y, br, br, colour);
                     }
                 }    

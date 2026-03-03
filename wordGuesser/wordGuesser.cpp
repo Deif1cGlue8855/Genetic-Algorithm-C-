@@ -1,4 +1,5 @@
 #include "GA.hpp"
+
 //Creates the character set the GA may use
 std::vector<std::string> createBounds(){
     std::vector<std::string> tempList;
@@ -7,8 +8,7 @@ std::vector<std::string> createBounds(){
         //and converts the numbers ti their ASCII
         //Characters which are store in an array
         char chr = char(i);
-        tempList.push_back(std::string(1,chr));
-    }
+        tempList.push_back(std::string(1,chr)); }
     tempList.push_back(" ");
     return tempList;
 }
@@ -36,7 +36,7 @@ std::vector<float> fitnessFunction(GA& ga, std::string target){
 //Location to be saved at
 std::string fileName = "wordGuessSave.txt";
 //Target string
-std::string target = "dkafgow g8ooq3g ro4qg2igr 892ypq 34rqg ' '    arq k 9 23";
+std::string target = "If you can read this, you can read";
 
 int main(){
     //Initialises RNG so multiple GA's can be used
@@ -54,18 +54,19 @@ int main(){
         //Learning process functions
         ga.setFitness(fitnessFunction(ga, target));
         ga.sortFitness();
-        ga.crossover(4, 20, 3);
+        ga.crossover(10, 20, 3);
         ga.applyMutation();
         ga.changeMutation();
         i++;
         //Only show the graphics every 1 generation 
         if(i % 1 == 0){
-            //ga.barGraph(10);
-            ga.lineGraph();
-            ga.showInfo(target.size());
+            ga.barGraph(10);
+            //ga.lineGraph();
+            //ga.showInfo(target.size());
             ga.saveGen();
             ga.printBuffer();
-            //NEED TO CHANGE THE HAS GOTTEN THING
+            //ga.pause();
+
             if(ga.hasGotten()){
                 ga.pause();
             }

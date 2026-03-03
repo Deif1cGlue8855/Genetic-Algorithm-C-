@@ -350,7 +350,7 @@ inline void GA::crossover(int numOfSections, int topGenes, int elites){
                     //Creates a random number between 0 and 1
                     double boundry = static_cast<double>(rand()) / RAND_MAX;
                     //Tests to see if that number is less than the crossover rate
-                    //
+                    
                     //The higher the crossover rate, the more it will favour P2 DNA strand
                     if(boundry <= this->crossoverRate){
                         tempDNA.addGene(this->DNAList[p2].getValueAt(j+k));

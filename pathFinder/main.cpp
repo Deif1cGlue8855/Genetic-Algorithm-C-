@@ -230,7 +230,7 @@ int main(){
             std::cout << ga.getBestFitness() << std::endl;
         }
         IT++;
-        if(IT == 100){IT = 0;}
+        if(IT == 1){IT = 0;}
 
     }
     CloseWindow();

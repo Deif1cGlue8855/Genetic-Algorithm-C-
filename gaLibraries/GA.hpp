@@ -32,6 +32,7 @@ TO DO LIST:
 #include <sstream>
 #include <fstream>
 #include <filesystem>
+
 struct RGB{
     int r,g,b;
 };
@@ -272,8 +273,6 @@ inline void GA::sortFitness(){
         tempStr += tList.getValueAt(i);
     }
     bestGuess = tempStr;
-    /*
-    */
 }
 
 inline void GA::gotCorrect(){
@@ -594,9 +593,6 @@ inline void GA::cleanUp(int n){
 }
 
 inline void GA::bar(int h, int y, int fullBar, std::string message, const RGB& colour){
-//GEN
-//BARS
-//empty space
     //Draws the gen info
     printAt(message, 1, y, gruvCream);
     y++;

@@ -165,8 +165,9 @@ int main(){
     int IT = 0;
     std::vector<std::vector<point>> paths;
 
-    while(!WindowShouldClose()){
 
+    while(!WindowShouldClose()){
+        int pass = 0;
 
         paths.clear();
         for(DNA x : ga.getDNAList()){
@@ -216,9 +217,10 @@ int main(){
 
                     if(paths[i][it].x == goal[0] && paths[i][it].y == goal[1]){
                         paths.erase(paths.begin() + i);
+                        pass ++;
                     }
-                    DrawText(std::to_string(100 - paths.size()).c_str(),0,40,20, WHITE);
-                    DrawText(std::to_string(paths.size()).c_str(),0,60,20, WHITE);
+                    //DrawText(std::to_string(100 - paths.size()).c_str(),0,40,20, WHITE);
+                    //DrawText(std::to_string(paths.size()).c_str(),0,60,20, WHITE);
                 }
                 //INFO / DEBUG PANEL
 
@@ -227,10 +229,11 @@ int main(){
 
                 EndDrawing();
             }
-            std::cout << ga.getBestFitness() << std::endl;
+            std::cout << ga.getBestFitness() << "     " << pass << std::endl;
         }
         IT++;
-        if(IT == 1){IT = 0;}
+        if(IT == 100){IT = 0;}
+
 
     }
     CloseWindow();

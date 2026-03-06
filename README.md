@@ -225,7 +225,7 @@ In the case you are using the GA with a program that locks you out of the termin
 |.getBestFitness()|This will return the best fitness accieved each generation|float|
 |.getCrossoverRate()|This will return the current crossover rate|float|
 |.getFitnesses()|This will return all the fitnesses in the GA|std::vector<float>|
-|.pause()|This will pause the program until the ENTER key is pressed. Works like a stepper | | 
+|.pause()|This will pause the program until the ENTER key is pressed| |
 
 ## <ins>GA optimisation</ins>
 

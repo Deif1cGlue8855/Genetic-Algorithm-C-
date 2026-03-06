@@ -231,10 +231,11 @@ In the case you are using the GA with a program that locks you out of the termin
 
 There are a few tips I can give to help optimise your GA.
 
-1) Set the ```topGenes``` parameter in the ```.crossover()``` function to 10% - 30%
+1) Set the ```topGenes``` parameter in the ```.crossover()``` function to 10% - 30% of the total population
 2) ```mutationRate``` when instantiating should be between 0.5% - 5.0%
 3) Keep the ```crossoverRate``` in the ```.crossover()``` function to 60% - 95%
 4) Have your ```population``` during instantiation to 50 - 200 DNA strands
+5) Keep your ```elites``` parameter in the ```.crossover()``` function to higher than 1
 
 
 ## <ins>Extra</ins>

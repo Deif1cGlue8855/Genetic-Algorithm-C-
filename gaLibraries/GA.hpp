@@ -176,12 +176,15 @@ inline GA::GA(int numOfDNA, int DNALength, float mutationRate, float crossoverRa
 }
 
 inline void GA::sendError(std::string message){
-    //exits the 
+    //exits the screen it has set up, returning you to normal terminal
     std::cout << "\033[?1049l";
     std::cout.flush();
-
+    
+    //Prints in RED
     std::cout << "\x1b[?25h";
+    //Prints [ERROR] and an appended message
     std::cout << "\u001b[31m[ERROR] " + message + "\u001b[0m" << std::endl;
+    //Ends the program
     exit(1);
 }
 

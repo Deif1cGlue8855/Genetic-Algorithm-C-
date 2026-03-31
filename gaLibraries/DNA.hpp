@@ -25,7 +25,6 @@ class DNA{
 };
 
 //WRITING METHOD FUNCTION
-
 inline DNA::DNA(){
     this->DNAlength = 0;
 }
@@ -51,6 +50,7 @@ inline std::string DNA::getValueAt(int point){
     }
     return this->genes[point];
 }
+//Changes the value at a specific point
 inline void DNA::setValueAt(std::string value, int point){
     if(point < 0 || point >= this->DNAlength){
         std::cout << "ERROR";

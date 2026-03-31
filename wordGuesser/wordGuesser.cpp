@@ -5,7 +5,7 @@ std::vector<std::string> createBounds(){
     std::vector<std::string> tempList;
     for(int i = 36; i < 127; i++){
         //Loops through the numbers 36 -> 127
-        //and converts the numbers ti their ASCII
+        //and converts the numbers to their ASCII
         //Characters which are store in an array
         char chr = char(i);
         tempList.push_back(std::string(1,chr)); }

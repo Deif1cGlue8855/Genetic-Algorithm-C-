@@ -285,6 +285,7 @@ inline void GA::gotCorrect(){
     }
 }
 
+//Does quick sort
 inline void GA::quickSort(int lp, int hp){
     if(lp < hp){
         int partition = part(lp,hp);
@@ -294,6 +295,7 @@ inline void GA::quickSort(int lp, int hp){
     }
 }
 
+//Checks to see if swapp has to be made
 inline int GA::part(int lp, int hp){
     float pivot = this->fitnesses[hp];
 
@@ -310,6 +312,7 @@ inline int GA::part(int lp, int hp){
     return finSwap + 1;
 }
 
+//Swaps indexes
 inline void GA::swapIndexes(int iOne, int iTwo){
     //Swaps the vaues in the the fitnesses
     float tempFit = this->fitnesses[iOne];
